@@ -26,13 +26,27 @@ Loader Connect是一个适配Connect/Express的静态资源加载器，它基于
 ### 启用编译支持
 在你的Connect/Express项目中，可以通过如下方式来启用文件的自动编译。
 
+安装本模块：
+
+```sh
+$ npm install loader-connect
+```
+
+添加中间件：
+
 ```js
 var Loader = require('loader-connect');
-app.use(Loader.less(__dirname)); // Loader.less一定要在静态文件中间件之前，否则.less文件会被静态文件中间件所处理
-app.use(Loader.stylus(__dirname)); // Loader.stylus一定要在静态文件中间件之前，否则.styl文件会被静态文件中间件所处理
-app.use(Loader.coffee(__dirname)); // Loader.coffee一定要在静态文件中间件之前，否则.coffee文件会被静态文件中间件所处理
-app.use(Loader.babel(__dirname)); // Loader.babel一定要在静态文件中间件之前，否则.es文件会被静态文件中间件所处理
-app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
+// Loader.less一定要在静态文件中间件之前，否则.less文件会被静态文件中间件所处理
+app.use(Loader.less(__dirname));
+// Loader.stylus一定要在静态文件中间件之前，否则.styl文件会被静态文件中间件所处理
+app.use(Loader.stylus(__dirname));
+// Loader.coffee一定要在静态文件中间件之前，否则.coffee文件会被静态文件中间件所处理
+app.use(Loader.coffee(__dirname));
+// Loader.babel一定要在静态文件中间件之前，否则.es文件会被静态文件中间件所处理
+app.use(Loader.babel(__dirname));
+app.use('/assets', connect.static(__dirname + '/assets', {
+  maxAge: 3600000 * 24 * 365
+}));
 ```
 
 以上的方式特别适合在开发环境中进行。
