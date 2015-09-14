@@ -30,15 +30,15 @@ exports.less = function (root) {
         return;
       }
       // 调用less将源文件内容翻译为CSS
-      less.render(content, function (err, css) {
+      less.render(content, function (err, result) {
         if (err) {
           return next(err);
         }
         res.writeHead(200, {
           'Content-Type': 'text/css',
-          'Content-Length': Buffer.byteLength(css)
+          'Content-Length': Buffer.byteLength(result.css)
         });
-        res.end(css);
+        res.end(result.css);
       });
     });
   };
@@ -120,13 +120,12 @@ exports.coffee = function (root) {
 };
 
 exports.babel = function (root) {
-  babel.transform(code, options);
   return function (req, res, next) {
     if ('GET' !== req.method && 'HEAD' !== req.method) {
       return next();
     }
     var pathname = url.parse(req.originalUrl).pathname;
-    if (!pathname.match(/\.es6$/)) {
+    if (!pathname.match(/\.es$/)) {
       return next();
     }
     fs.readFile(path.join(root, pathname), 'utf8', function (err, content) {
@@ -140,7 +139,7 @@ exports.babel = function (root) {
         return;
       }
       // 调用babel将源文件内容翻译为es5可接受的方式
-      var result = babel.transform(content, options);
+      var result = babel.transform(content);
       res.writeHead(200, {
         'Content-Type': 'text/javascript',
         'Content-Length': Buffer.byteLength(result.code)
