@@ -5,7 +5,7 @@ var app = connect();
 app.use(connect.query());
 app.use(dev.stylus(__dirname));
 
-describe('Loader.stylus', function () {
+describe('stylus', function () {
   it('should 200', function (done) {
     request(app)
     .get('/assets/home.styl')

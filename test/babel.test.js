@@ -3,14 +3,14 @@ var request = require('supertest');
 var connect = require('connect');
 var app = connect();
 app.use(connect.query());
-app.use(dev.coffee(__dirname));
+app.use(dev.babel(__dirname));
 
-describe('coffee', function () {
+describe('babel', function () {
   it('should 200', function (done) {
     request(app)
-    .get('/assets/home.coffee')
+    .get('/assets/babel.es')
     .expect(200)
-    .expect('(function() {\n  var foo;\n\n  foo = 1;\n\n}).call(this);\n', done);
+    .expect('"use strict";\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }\n\nvar Test = function Test() {\n  _classCallCheck(this, Test);\n};', done);
   });
 
   it('should 404', function (done) {
@@ -25,21 +25,21 @@ describe('coffee', function () {
     .expect(404, done);
   });
 
-  it('should 404 with coffee', function (done) {
+  it('should 404 with babel', function (done) {
     request(app)
-    .get('/assets/inexsit.coffee')
+    .get('/assets/inexsit.es')
     .expect(404, done);
   });
 
-  it('should 404 with head & coffee', function (done) {
+  it('should 404 with head & babel', function (done) {
     request(app)
-    .head('/assets/inexsit.coffee')
+    .head('/assets/inexsit.es')
     .expect(404, done);
   });
 
-  it('should 500 with invalid coffee', function (done) {
+  it('should 500 with invalid es', function (done) {
     request(app)
-    .head('/assets/invalid.coffee')
+    .head('/assets/invalid.es')
     .expect(500, done);
   });
 });

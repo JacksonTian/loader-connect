@@ -5,7 +5,7 @@ var app = connect();
 app.use(connect.query());
 app.use(dev.less(__dirname));
 
-describe('Loader.less', function () {
+describe('less', function () {
   it('should 200', function (done) {
     request(app)
     .get('/assets/home.less')

@@ -139,7 +139,12 @@ exports.babel = function (root) {
         return;
       }
       // 调用babel将源文件内容翻译为es5可接受的方式
-      var result = babel.transform(content);
+      var result;
+      try {
+        result = babel.transform(content);
+      } catch (ex) {
+        return next(ex);
+      }
       res.writeHead(200, {
         'Content-Type': 'text/javascript',
         'Content-Length': Buffer.byteLength(result.code)
