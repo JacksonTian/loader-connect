@@ -1,6 +1,6 @@
 {
   "name": "loader-connect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Loader middleware for connect",
   "main": "connect.js",
   "scripts": {
